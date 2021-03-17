@@ -1,1 +1,44 @@
-<h1>Hello World! :D</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" style="padding-top: 5%; padding-left: 10%; padding-right: 10%;">
+        <form class="input-group my-3" action="/shortUrls" method="POST">
+            <input type="url" class="form-control form-control-lg" name="fullUrl" id="fullUrl" placeholder="https://example.com" required>
+            <span class="input-group-btn">
+                <button class="btn btn-success btn-lg" type="submit" style="width: 100px;">Shrink</button>
+            </span>
+        </form>
+
+        <form class="input-group my-3">
+            <input type="url" class="form-control form-control-lg" name="shortUrl" id="shortUrl"
+                readonly placeholder="short url">
+            <span class="input-group-btn">
+                <button class="btn btn-success btn-lg" onclick="copyToClipboard()" style="width: 100px;">Copy</button>
+                <script>
+                    function copyToClipboard() {
+                        var copyText = document.getElementById("shortUrl");
+                        copyText.select();
+                        copyText.setSelectionRange(0, 99999);
+                        document.execCommand("copy");
+                        alert("Copied to Clipboard: " + copyText.value);
+                    }
+                </script>
+            </span>
+        </form>
+    </div>
+    <!-- <div>
+        <% shortUrls.forEach(shortUrl => { %>
+            <h3> <%= shortUrl.full %> </h3>
+            <h3> <%= shortUrl.short %> </h3>
+            <h3> <%= shortUrl.clicks %> </h3>
+        <% }); %>
+    </div> -->
+</body>
+</html>
