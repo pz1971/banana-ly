@@ -11,15 +11,18 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended:false }))
 
 app.get('/', async (req, res) => {
-    const shortUrls = await ShortUrl.find()
-    res.render('index', {shortUrls: shortUrls})
-    // res.render('index')
+    res.render('index', {shortUrls: {short:""}})
 })
 
-app.post('/shortUrls', async (req, res) => {
-    await ShortUrl.create({full: req.body.fullUrl})
-    res.redirect('/')
-    // res.render('index', {shortUrl: await ShortUrl.findOne({full: req.body.fullUrl})})
+app.post('/', async (req, res) => {
+    const x = await ShortUrl.findOne({ full: req.body.fullUrl, userEmail: 'admin' }) 
+    if(x == null){
+        await ShortUrl.create({full: req.body.fullUrl})
+        res.render('index', {shortUrls: await ShortUrl.findOne({full: req.body.fullUrl, userEmail: 'admin'})})
+    }
+    else{
+        res.render('index', {shortUrls : x})
+    }
 })
 
 app.get('/:shortUrl', async (req, res) => {

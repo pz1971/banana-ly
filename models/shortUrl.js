@@ -15,7 +15,19 @@ const shortUrlSchema = mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    userEmail:{
+        type: String,
+        require: true,
+        default: 'admin'
     }
 })
+
+shortUrlSchema.index({
+    full: 1,
+    userEmail: 1,
+    }, {
+    unique: true,
+});
 
 module.exports = mongoose.model('ShortUrl', shortUrlSchema)
