@@ -1,11 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
+const User = require('./models/user')
 const app = express()
 
 mongoose.connect('mongodb://localhost/bananaLy', {
     useNewUrlParser: true, useUnifiedTopology: true
 })
+
+app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended:false }))
@@ -22,6 +25,35 @@ app.post('/', async (req, res) => {
     }
     else{
         res.render('index', {shortUrls : x})
+    }
+})
+
+app.post('/SignUpLogIn', (req, res) => {
+    res.render('SignUpLogIn')
+})
+// app.post('/SignUpLogIn', (req, res) => {
+//     res.render('signup_login')
+// })
+
+app.post('/signUpButtonAction', async (req, res) => {
+    const x = await User.findOne({ userEmail: req.body.email })
+    if(x == null){
+        await User.create( {name: req.body.name, userEmail: req.body.email, password: req.body.password} )
+        res.render('test', {User: await User.findOne({userEmail: req.body.email})})
+    }
+    else{
+        // already registered with this email
+        return res.sendStatus(404)
+    }
+})
+app.post('/logInButtonAction', async (req, res) => {
+    const x = await User.findOne({ userEmail: req.body.email2 })
+    if(x == null){
+        // not registered
+        return res.sendStatus(404)
+    }
+    else{
+        res.render('test', {User: x})
     }
 })
 
