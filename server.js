@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
 const User = require('./models/user')
+const Txn = require('./models/txn')
+const Ad = require('./models/ad')
 const app = express()
 
 mongoose.connect('mongodb://localhost/bananaLy', {
@@ -53,7 +55,10 @@ app.post('/logInButtonAction', async (req, res) => {
         return res.sendStatus(404)
     }
     else{
-        res.render('test', {User: x})
+        if(req.body.password2 == x.password)
+            res.render('test', {User: x})
+        else
+            return res.sendStatus(404)
     }
 })
 
