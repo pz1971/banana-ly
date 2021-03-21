@@ -17,7 +17,7 @@
 
       <div class="signin-signup">
         <!-- here form turned into div -->
-        <div class="sign-in-form" id="sign-in-form-id">
+        <form action="logInButtonAction" method="POST" class="sign-in-form">
           <div class="cartoon-container">
             <svg class="mySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
               viewBox="0 0 200 200">
@@ -150,28 +150,49 @@
               </g>
             </svg>
           </div>
-          
-          <form action="logInButtonAction" method="POST" class="form login">
+
+
+          <form class="form login">
             <div class="form__field form__field--email">
+              <label class="label label--icon" for="login__email">
+                <span class="hidden">Email</span>
+              </label>
               <div class="form__input-wrapper">
                 <div class="input-field">
                   <i class="fas fa-user"></i>
                   <input id="login__email" type="text" name="email2" class="form__input" placeholder="Email/Username"
                     required />
                 </div>
+                <div class="underline-wrapper">
+                  <span class="underline"></span>
+                </div>
               </div>
             </div>
 
             <div class="form__field form__field--password">
+              <label class="label label--icon" for="login__password">
+                <span class="hidden">Password</span>
+              </label>
+
               <div class="form__input-wrapper">
                 <div class="input-field">
                   <i class="fas fa-lock"></i>
                   <input type="password" id="login__password" class="form__input" placeholder="Password" required
                     name="password2" />
                 </div>
+
+                <div class="underline-wrapper">
+                  <span class="underline"></span>
+                </div>
               </div>
             </div>
-            <button type="submit" style="margin-left:-10px; " class="btn"> Log in</button>
+
+            <div class="login-actions-container">
+              <div class="form__field form__field--submit">
+                <button type="submit" style="margin-left:-10px; " class="btn" >Log in</button>
+              </div>
+            </div>
+            <!-- <a class="forgot-password" style="margin-right: 500px;" href="#">Forgot Password?</a> -->
           </form>
 
           <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" class="icons">
@@ -185,7 +206,7 @@
             </symbol>
           </svg>
 
-        </div>
+        </form>
 
 
         <form action="signUpButtonAction" method="POST" class="sign-up-form ">

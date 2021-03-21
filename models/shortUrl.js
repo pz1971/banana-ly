@@ -20,6 +20,16 @@ const shortUrlSchema = mongoose.Schema({
         type: String,
         require: true,
         default: 'admin'
+    },
+    monetized:{
+        type: Boolean,
+        require: true,
+        default: true
+    },
+    creationTime:{
+        type: Date,
+        require: true,
+        default: Date()
     }
 })
 
