@@ -13,6 +13,10 @@ const txnSchema = mongoose.Schema({
         type: Date,
         require: true,
         default: Date()
+    },
+    gateway:{
+        type: String,
+        require: false
     }
 })
 
