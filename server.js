@@ -68,7 +68,6 @@ app.post('/uShrink', async (req, res) => {
     const x = await ShortUrl.findOne({ full: req.body.fullUrl, userEmail: req.body.email, monetized: f })
     if (x == null) {
         await ShortUrl.create({ full: req.body.fullUrl, userEmail: req.body.email, monetized: f })
-        console.log('here')
         res.render('userHome', {
             shortUrls: await ShortUrl.findOne({ full: req.body.fullUrl, userEmail: req.body.email, monetized: f }),
             User: await User.findOne({ userEmail: req.body.email })
