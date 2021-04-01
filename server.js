@@ -112,7 +112,15 @@ app.post('/managePage', async (req, res) => {
 })
 
 app.post('/wallet', async (req, res) => {
-    res.render('wallet')
+    const user = await User.findOne({ userEmail: req.body.email }) ;
+    const txns = await Txn.find({ userEmail: req.body.email }).limit(3) ;
+    const urlList = await ShortUrl.find({ userEmail: req.body.email, monetized: true }) ;
+    console.log(urlList) ;
+    res.render('wallet', {
+        User: user,
+        Txns: txns,
+        urlList: urlList
+    })
 })
 
 app.get('/:shortUrl', async (req, res) => {
