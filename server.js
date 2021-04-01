@@ -107,8 +107,14 @@ app.post('/editUserInfo', async (req, res) => {
     
     res.render('SignUpLogIn')
 })
+
 app.post('/managePage', async (req, res) => {
-    res.render('managePage')
+    const user = await User.findOne({ userEmail: req.body.email }) ;
+    const urlList = await shortUrl.find({ userEmail: req.body.email }).limit(3) ;
+    res.render('managePage', {
+        User: user,
+        urlList: urlList
+    })
 })
 
 app.post('/wallet', async (req, res) => {
