@@ -4,6 +4,7 @@ const ShortUrl = require('./models/shortUrl')
 const User = require('./models/user')
 const Txn = require('./models/txn')
 const Ad = require('./models/ad')
+const shortUrl = require('./models/shortUrl')
 const app = express()
 
 mongoose.connect('mongodb://localhost/bananaLy', {
@@ -41,7 +42,7 @@ app.post('/signUpButtonAction', async (req, res) => {
     const x = await User.findOne({ userEmail: req.body.email })
     if (x == null) {
         await User.create({ name: req.body.name, userEmail: req.body.email, password: req.body.password })
-        res.render('userHome', { User: await User.findOne({ userEmail: req.body.email }), shortUrls: { short: "" } })
+        res.render('userHome', { User: await User.findOne({ userEmail: req.body.email }), shortUrls: { short: "" }, urlList:[] })
     }
     else {
         // already registered with this email
@@ -55,8 +56,11 @@ app.post('/logInButtonAction', async (req, res) => {
         return res.sendStatus(404)
     }
     else {
-        if (req.body.password2 == x.password)
-        res.render('userHome', { User: x, shortUrls: { short: "" } })
+        if (req.body.password2 == x.password){
+            const urlList = await shortUrl.find({ userEmail: req.body.email2 }).limit(3) ;
+            // console.log(urlList) ;
+            res.render('userHome', { User: x, shortUrls: { short: "" }, urlList: urlList })
+        }
         else
         return res.sendStatus(404)
     }
@@ -64,19 +68,22 @@ app.post('/logInButtonAction', async (req, res) => {
 
 app.post('/uShrink', async (req, res) => {
     const f = (req.body.toggle == "monetized") // monetized option is checked or not
-    
     const x = await ShortUrl.findOne({ full: req.body.fullUrl, userEmail: req.body.email, monetized: f })
+    const urlList = await shortUrl.find({ userEmail: req.body.email }).limit(3) ;
+    
     if (x == null) {
         await ShortUrl.create({ full: req.body.fullUrl, userEmail: req.body.email, monetized: f })
         res.render('userHome', {
             shortUrls: await ShortUrl.findOne({ full: req.body.fullUrl, userEmail: req.body.email, monetized: f }),
-            User: await User.findOne({ userEmail: req.body.email })
+            User: await User.findOne({ userEmail: req.body.email }),
+            urlList: urlList
         })
     }
     else {
         res.render('userHome', {
             shortUrls: x,
-            User: await User.findOne({ userEmail: req.body.email })
+            User: await User.findOne({ userEmail: req.body.email }),
+            urlList: urlList
         })
     }
 })
