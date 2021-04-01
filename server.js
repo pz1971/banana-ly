@@ -107,6 +107,13 @@ app.post('/editUserInfo', async (req, res) => {
     
     res.render('SignUpLogIn')
 })
+app.post('/managePage', async (req, res) => {
+    res.render('managePage')
+})
+
+app.post('/wallet', async (req, res) => {
+    res.render('wallet')
+})
 
 app.get('/:shortUrl', async (req, res) => {
     const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
