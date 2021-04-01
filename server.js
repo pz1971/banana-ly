@@ -81,30 +81,25 @@ app.post('/uShrink', async (req, res) => {
     }
 })
 
-// app.post('/uShrink', async (req, res) => {
-//     const x = await ShortUrl.findOne({ full: req.body.fullUrl })
-//     if (x == null) {
-//         await ShortUrl.create({ full: req.body.fullUrl })
-//         res.render('userHome', {
-//             shortUrls: await ShortUrl.findOne({ full: req.body.fullUrl }),
-//             // User: await User.findOne({ userEmail: "hehe" })
-//             User:{
-//                 name: "asddddddf",
-//                 userEmail: "heheheeee"
-//             }
-//         })
-//     }
-//     else {
-//         res.render('userHome', {
-//             shortUrls: x,
-//             // User: await User.findOne({ userEmail: "req.body.email" })
-//             User: {
-//                 name: "asdf",
-//                 userEmail: "huhu"
-//             }
-//         })
-//     }
-// })
+app.get('/u/:user_email', async (req, res) => {
+    const user = await User.findOne({ userEmail: req.params.user_email })
+    if (user == null)
+        return res.sendStatus(404)
+    else 
+        res.render('user', {User: user})
+})
+
+app.post('/editUserInfo', async (req, res) => {
+    const user = await User.findOne({ userEmail: req.body.email }) ;
+    if (user == null)
+    return res.sendStatus(404)
+    
+    user.name = req.body.name ;
+    user.password = req.body.new_password ;
+    user.save() ;
+    
+    res.render('SignUpLogIn')
+})
 
 app.get('/:shortUrl', async (req, res) => {
     const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
