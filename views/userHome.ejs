@@ -110,7 +110,7 @@
                         <div>
                             <input type="text" name="shortUrlBox" id="shortUrlBox" readonly
                                 style="width: 640px; height: 42px;" placeholder="short url"
-                                value="localhost:5000/<%=shortUrls.short%>">
+                                value="http://bananaly.herokuapp.com/<%=shortUrls.short%>">
                         </div>
                         <div style="margin-left: 60px; ">
                             <button type="submit" onclick="copyToClipboard()"
@@ -147,7 +147,7 @@
                         <% var cnt = 0 ; %>
                         <% urlList.forEach(element => { %>
                             <tr>
-                                <td><a href="localhost:5000/<%= element.short %>"><%= element.short %> </a></td>
+                                <td><a href="http://bananaly.herokuapp.com/<%= element.short %>"><%= element.short %> </a></td>
                                 <!-- <td><a href="<%= element.full %>"><%= element.full %> </a></td> -->
                                 <td>
                                     <!-- this content can be very large... -->
