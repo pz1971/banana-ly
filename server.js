@@ -7,7 +7,7 @@ const Ad = require('./models/ad')
 const shortUrl = require('./models/shortUrl')
 const app = express()
 
-mongoose.connect('mongodb://localhost/bananaLy', {
+mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/bananaLy', {
     useNewUrlParser: true, useUnifiedTopology: true
 })
 
