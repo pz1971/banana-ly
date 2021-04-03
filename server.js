@@ -5,6 +5,7 @@ const User = require('./models/user')
 const Txn = require('./models/txn')
 const Ad = require('./models/ad')
 const shortUrl = require('./models/shortUrl')
+const { json } = require('express')
 const app = express()
 
 mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/bananaLy', {
@@ -121,7 +122,7 @@ app.post('/wallet', async (req, res) => {
     const user = await User.findOne({ userEmail: req.body.email }) ;
     const txns = await Txn.find({ userEmail: req.body.email }).limit(3) ;
     const urlList = await ShortUrl.find({ userEmail: req.body.email, monetized: true }) ;
-    console.log(urlList) ;
+    // console.log(urlList) ;
     res.render('wallet', {
         User: user,
         Txns: txns,
@@ -129,15 +130,116 @@ app.post('/wallet', async (req, res) => {
     })
 })
 
+app.post('/adSubmission', async (req, res) =>{
+    const user = await User.findOne({ userEmail: req.body.email }) ;
+    res.render('AdSubmissionForm', {
+        User : user
+    })
+})
+
+app.post('/payment', async (req, res) => {
+    const user = await User.findOne({ userEmail: req.body.email }) ;
+    const adsAr =  JSON.parse(req.body.ads_ar) ;
+    
+    await adsAr.forEach(element => {
+        Ad.create({
+            userEmail: user.userEmail,
+            adType: element["type"],
+            adEmbed: element["embedded"],
+            adRedirect: element["redirected"]
+        })
+    });
+    
+    res.render('AdSubmissionForm', {
+        User : user
+    })
+})
+
 app.get('/:shortUrl', async (req, res) => {
     const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
     if (shortUrl == null)
-        return res.sendStatus(404)
-
+    return res.sendStatus(404)
+    
     shortUrl.clicks++
     shortUrl.save()
 
-    res.redirect(shortUrl.full)
+    if(shortUrl.monetized == false){
+        res.redirect(shortUrl.full)
+    }
+    else{
+
+        const video = await Ad.findOne({adType: 'video'}) ;
+        const banner = await Ad.findOne({adType: 'banner'}) ;
+        const newTab = await Ad.findOne({adType: 'newTab'}) ;
+        const smallBox = await Ad.findOne({adType: 'smallBox'}) ;
+    
+        var x = {
+            "full" : shortUrl.full,
+    
+            "videoEmbed": "",
+            "videoRedirect": "",
+    
+            "bannerEmbed": "",
+            "bannerRedirect": "",
+    
+            "newTabEmbed": "",
+            "newTabRedirect": "",
+    
+            "smallBoxEmbed": "",
+            "smallBoxRedirect": "",
+        }
+    
+        if(video != null){
+            video.serveCount++ ;
+            video.remainingCnt-- ;
+            video.save() ;
+    
+            x["videoEmbed"] = video.adEmbed ;
+            x["videoRedirect"] = video.adRedirect ;
+    
+            if(video.remainingCnt == 0){
+                Ad.deleteOne({_id: video._id}) ;
+            }
+        }
+        if(banner != null){
+            banner.serveCount++ ;
+            banner.remainingCnt-- ;
+            banner.save() ;
+    
+            x["bannerEmbed"] = banner.adEmbed ;
+            x["bannerRedirect"] = banner.adRedirect ;
+    
+            if(banner.remainingCnt == 0){
+                Ad.deleteOne({_id: banner._id}) ;
+            }
+        }
+        if(newTab != null){
+            newTab.serveCount++ ;
+            newTab.remainingCnt-- ;
+            newTab.save() ;
+            
+            x["newTabEmbed"] = newTab.adEmbed ;
+            x["newTabRedirect"] = newTab.adRedirect ;
+    
+            if(newTab.remainingCnt == 0){
+                Ad.deleteOne({_id: newTab._id}) ;
+            }
+        }
+        if(smallBox != null){
+            smallBox.serveCount++ ;
+            smallBox.remainingCnt-- ;
+            smallBox.save() ;
+            
+            x["smallBoxEmbed"] = smallBox.adEmbed ;
+            x["smallBoxRedirect"] = smallBox.adRedirect ;
+    
+            if(smallBox.remainingCnt == 0){
+                Ad.deleteOne({_id: newTab.smallBox}) ;
+            }
+        }
+    
+        res.render('medium', x)
+    }
 })
 
 app.listen(process.env.PORT || 5000);

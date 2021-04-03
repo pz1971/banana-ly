@@ -32,6 +32,16 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 490px;">
                         <ul class="navbar-nav m-auto">
                             <li class="nav-item active">
+                                <form method="POST" action="adSubmission" >
+                                    <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
+                                    <button type="submit" 
+                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                    class="managebtn">ADs</button> 
+                                    <!-- <input type="submit" class="btn btn-info" value="Links">  -->
+                                    <!--  <div class="nav-link" type="submit"  >Links</div> -->
+                                </form>
+                            </li>
+                            <li class="nav-item active">
                                 <form method="POST" action="wallet" >
                                     <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
                                     <button type="submit" 
@@ -110,7 +120,7 @@
                         <div>
                             <input type="text" name="shortUrlBox" id="shortUrlBox" readonly
                                 style="width: 640px; height: 42px;" placeholder="short url"
-                                value="http://bananaly.herokuapp.com/<%=shortUrls.short%>">
+                                value="localhost:5000/<%=shortUrls.short%>">
                         </div>
                         <div style="margin-left: 60px; ">
                             <button type="submit" onclick="copyToClipboard()"
@@ -147,7 +157,7 @@
                         <% var cnt = 0 ; %>
                         <% urlList.forEach(element => { %>
                             <tr>
-                                <td><a href="http://bananaly.herokuapp.com/<%= element.short %>"><%= element.short %> </a></td>
+                                <td><a href="localhost:5000/<%= element.short %>"><%= element.short %> </a></td>
                                 <!-- <td><a href="<%= element.full %>"><%= element.full %> </a></td> -->
                                 <td>
                                     <!-- this content can be very large... -->
@@ -218,7 +228,7 @@
         </div>
         <!--  Card Background  Starts -->
 
-        <!-- Footer Background Ends -->
+        <!-- Footer Background Starts -->
         <footer class="footer">
             <div class="footer-left">
                 <img src="logo.png">
