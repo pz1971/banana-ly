@@ -167,12 +167,7 @@ app.get('/:shortUrl', async (req, res) => {
         res.redirect(shortUrl.full)
     }
     else{
-
-        const video = await Ad.findOne({adType: 'video'}) ;
-        const banner = await Ad.findOne({adType: 'banner'}) ;
-        const newTab = await Ad.findOne({adType: 'newTab'}) ;
-        const smallBox = await Ad.findOne({adType: 'smallBox'}) ;
-    
+        
         var x = {
             "full" : shortUrl.full,
     
@@ -188,9 +183,35 @@ app.get('/:shortUrl', async (req, res) => {
             "smallBoxEmbed": "",
             "smallBoxRedirect": "",
         }
+
+        // const video = await Ad.findOne({adType: 'video'}) ;
+        // const banner = await Ad.findOne({adType: 'banner'}) ;
+        // const newTab = await Ad.findOne({adType: 'newTab'}) ;
+        // const smallBox = await Ad.findOne({adType: 'smallBox'}) ;
+
+        const video0 = (await Ad.aggregate([  
+            { $match:  {adType: 'video'} } ,
+            { $sample: {size: 1} }
+        ]))
+
+        const banner0 = (await Ad.aggregate([  
+            { $match:  {adType: 'banner'} },
+            { $sample: {size: 1} }
+        ]))
+        
+        const newTab0 = (await Ad.aggregate([  
+            { $match:  {adType: 'newTab'} },
+            { $sample: {size: 1} } 
+        ]))
+        
+        const smallBox0 = (await Ad.aggregate([  
+            { $match:  {adType: 'smallBox'} },
+            { $sample: {size: 1} }
+        ]))
     
-        if(video != null){
-            video.serveCount++ ;
+        if(video0 != null && video0.length == 1){
+            const video = await Ad.findOne({_id : video0[0]._id}) ;
+            video.servedCnt++ ;
             video.remainingCnt-- ;
             video.save() ;
     
@@ -201,8 +222,9 @@ app.get('/:shortUrl', async (req, res) => {
                 Ad.deleteOne({_id: video._id}) ;
             }
         }
-        if(banner != null){
-            banner.serveCount++ ;
+        if(banner0 != null && banner0.length == 1){
+            const banner = await Ad.findOne({_id : banner0[0]._id}) ;
+            banner.servedCnt++ ;
             banner.remainingCnt-- ;
             banner.save() ;
     
@@ -213,8 +235,9 @@ app.get('/:shortUrl', async (req, res) => {
                 Ad.deleteOne({_id: banner._id}) ;
             }
         }
-        if(newTab != null){
-            newTab.serveCount++ ;
+        if(newTab0 != null && newTab0.length == 1){
+            const newTab = await Ad.findOne({_id : newTab0[0]._id}) ;
+            newTab.servedCnt++ ;
             newTab.remainingCnt-- ;
             newTab.save() ;
             
@@ -225,8 +248,9 @@ app.get('/:shortUrl', async (req, res) => {
                 Ad.deleteOne({_id: newTab._id}) ;
             }
         }
-        if(smallBox != null){
-            smallBox.serveCount++ ;
+        if(smallBox0 != null && smallBox0.length == 1){
+            const smallBox = await Ad.findOne({_id : smallBox0[0]._id}) ;
+            smallBox.servedCnt++ ;
             smallBox.remainingCnt-- ;
             smallBox.save() ;
             
@@ -234,7 +258,7 @@ app.get('/:shortUrl', async (req, res) => {
             x["smallBoxRedirect"] = smallBox.adRedirect ;
     
             if(smallBox.remainingCnt == 0){
-                Ad.deleteOne({_id: newTab.smallBox}) ;
+                Ad.deleteOne({_id: newTab._id}) ;
             }
         }
     
