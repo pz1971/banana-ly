@@ -96,12 +96,14 @@
             <tr>
             <% var cnt = 0 %>
             <% Ads.forEach(element => { %>
+              <tr>
                 <td><%= element.adType %> </td>
                 <td><%= element.adRedirect %> </td>
                 <td><%= element.adEmbed %> </td>
                 <td><%= element.servedCnt %> </td>
                 <td><%= element.remainingCnt %> </td>
                 <% cnt++ %> 
+              </tr>
             <% }); %>
             </tr>
             

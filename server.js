@@ -1,4 +1,5 @@
 const express = require('express')
+const php_runner = require("child_process");
 const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
 const User = require('./models/user')
@@ -38,6 +39,17 @@ app.post('/SignUpLogIn', (req, res) => {
 // app.post('/SignUpLogIn', (req, res) => {
     //     res.render('signup_login')
     // })
+
+
+app.get('/about', (req, res) => {
+    var phpScriptPath = "public/about.php";
+    var argsString = "";
+    php_runner.exec("php " + phpScriptPath + " " +argsString, function(err, phpResponse, stderr) {
+        if(err) console.log(err); /* log error */
+        // console.log( phpResponse );
+        res.send(phpResponse) ;
+    });
+})
 
 app.post('/signUpButtonAction', async (req, res) => {
     const x = await User.findOne({ userEmail: req.body.email })
