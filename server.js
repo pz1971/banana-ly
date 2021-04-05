@@ -173,6 +173,15 @@ app.post('/allTxns', async (req, res) => {
     })
 })
 
+app.post('/allAds', async (req, res) => {
+    const user = await User.findOne({ userEmail: req.body.email }) ;
+    const ads = await Ad.find({ userEmail: req.body.email }) ;
+    res.render('all_ads', {
+        User: user,
+        Ads: ads
+    })
+})
+
 app.get('/:shortUrl', async (req, res) => {
     const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
     if (shortUrl == null)
