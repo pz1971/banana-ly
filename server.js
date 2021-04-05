@@ -155,6 +155,24 @@ app.post('/payment', async (req, res) => {
     })
 })
 
+app.post('/allLinks', async (req, res) => {
+    const user = await User.findOne({ userEmail : req.body.email }) ;
+    const urlList = await ShortUrl.find({ userEmail: req.body.email }) ;
+    res.render('all_links', {
+        User: user,
+        urlList : urlList
+    }) ;
+})
+
+app.post('/allTxns', async (req, res) => {
+    const user = await User.findOne({ userEmail: req.body.email }) ;
+    const txns = await Txn.find({ userEmail: req.body.email }) ;
+    res.render('all_txns', {
+        User: user,
+        Txns: txns
+    })
+})
+
 app.get('/:shortUrl', async (req, res) => {
     const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
     if (shortUrl == null)

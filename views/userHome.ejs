@@ -217,6 +217,7 @@
                 <!-- More Button Starts -->
                 <div class="wrapper">
                     <form action="allLinks" method="POST">
+                        <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
                         <button class="cta" type="submit">
                             <p style="margin-left: -40px; margin-top: -15px;">More</p>
                             <span>
