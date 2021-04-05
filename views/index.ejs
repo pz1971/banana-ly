@@ -64,8 +64,8 @@
                         <div class="col-md-4  d-flex">
 
                             <div>
-                                <input type="text" name="fullUrl" id="fullUrl" placeholder="" required
-                                    style="width: 640px;">
+                                <input type="url" name="fullUrl" id="fullUrl" placeholder="" required
+                                    style="width: 640px;" onkeyup="check_this_URL()">
                                 <span> Give Me the Link</sp>
                             </div>
 
@@ -73,12 +73,29 @@
                                 <div style="margin-left: 60px;">
                                     <input type="submit"  
                                         style="margin-left: -30px; font-size: small; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
-                                        class="btn" value="Shrink" />
+                                        class="btn" value="Shrink" id="shrinkButton" />
                                 </div>
                             </div>
                             <!-- <div class="d-flex justify-content-center">
                                 <input class="l" type="checkbox">
                             </div> -->
+                            <script>
+                                function check_this_URL(){
+                                    var url = document.getElementById('fullUrl').value ;
+                                    var btn = document.getElementById('shrinkButton') ;
+                                    if(url.substring(0, 30) == "https://bananaly.herokuapp.com"
+                                    || url.substring(0, 29) == "http://bananaly.herokuapp.com"
+                                    || url.substring(0, 22) == "https://localhost:5000"
+                                    || url.substring(0, 21) == "http://localhost:5000"
+                                    || url.substring(0, 14) == "localhost:5000"){
+                                        btn.disabled = true ;
+                                        alert("Can't shrink links of this website...");
+                                    }
+                                    else{
+                                        btn.disabled = false ;
+                                    }
+                                }
+                            </script>
                         </div>
                     </form>
                 </div>
