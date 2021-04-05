@@ -55,7 +55,94 @@
                 </nav>
             </div>
             <!--    Nav Bar Ends Here -->
+            <div>
+                <script>
+                    window.onload = function () {
+                    
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        animationEnabled: true,
+                        title:{
+                            text: "Your Link Statistics"
+                        },	
+                        axisY: {
+                            title: "Clicks",
+                            titleFontColor: "#4F81BC",
+                            lineColor: "#4F81BC",
+                            labelFontColor: "#4F81BC",
+                            tickColor: "#4F81BC"
+                        },
+                        axisY2: {
+                            title: "Revenue",
+                            titleFontColor: "#C0504E",
+                            lineColor: "#C0504E",
+                            labelFontColor: "#C0504E",
+                            tickColor: "#C0504E"
+                        },	
+                        toolTip: {
+                            shared: true
+                        },
+                        legend: {
+                            cursor:"pointer",
+                            itemclick: toggleDataSeries
+                        },
+                        data: [{
+                            type: "column",
+                            name: "Clicks",
+                            legendText: "Clicks",
+                            showInLegend: true, 
+                            dataPoints:[
+                                // { label: 1, y: 266.21 },
+                                // { label: 2, y: 302.25 },
+                                // { label: 3, y: 157.20 },
+                                // { label: "Iraq", y: 148.77 },
+                                // { label: "Kuwait", y: 101.50 },
+                                // { label: "UAE", y: 97.8 }
+                                <% var ii = 1 %>
+                                <% urlStat.forEach(element => { %>
+                                { label: <%= ii %>, y: <%= element.clicks %> },
+                                <% ii++ %>
+                                <% }); %>
+                            ]
+                        },
+                        {
+                            type: "column",	
+                            name: "Revenue",
+                            legendText: "Revenue",
+                            axisYType: "secondary",
+                            showInLegend: true,
+                            dataPoints:[
+                                // { label: 1, y: 10.46 },
+                                // { label: 2, y: 2.27 },
+                                // { label: 3, y: 3.99 },
+                                // { label: "Iraq", y: 4.45 },
+                                // { label: "Kuwait", y: 2.92 },
+                                // { label: "UAE", y: 3.1 }
+                                <% ii = 1 %>
+                                <% urlStat.forEach(element => { %>
+                                { label: <%= ii %>, y: <%= element.clicks * 0.1 %> },
+                                <% ii++ %>
+                                <% }); %>
+                            ]
+                        }]
+                    });
+                    chart.render();
+                    
+                    function toggleDataSeries(e) {
+                        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                            e.dataSeries.visible = false;
+                        }
+                        else {
+                            e.dataSeries.visible = true;
+                        }
+                        chart.render();
+                    }
+                    
+                    }
+                    </script>
 
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            </div>
 
             <div class="togggleflip" onclick="togglefun()">
                 <div id="toggle"></div>
