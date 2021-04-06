@@ -36,7 +36,7 @@
         </div>
         <div class="row" id="txt-img-row2">
             <div class="col">
-                <img src="img_dp2.jpg">
+                <img src="img_dp4.jpg">
             </div>
             
             <div class="col">
