@@ -25,39 +25,37 @@
 
             <div class="container-fluid p-0">
                 <nav class="navbar navbar-expand-lg my-navbar">
-                    <a class="navbar-brand" href="/userHome?email=<%= User.userEmail %>">
+                    <a class="navbar-brand" href="#">
                         <img class="image_logo" src="logo.png" style="height: 60px; width:121px" alt="">
                     </a>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 490px;">
                         <ul class="navbar-nav m-auto">
                             <li class="nav-item active">
-                                <!-- <a class="nav-link" href="#">Wallets</a> -->
-                                <form method="POST" action="allAds" >
+                                <form method="POST" action="userHome">
                                     <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
-                                    <button type="submit" 
-                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
-                                    class="managebtn">Ads</button> 
-                                    <!-- <input type="submit" class="btn btn-info" value="Links">  -->
-                                    <!--  <div class="nav-link" type="submit"  >Links</div> -->
+                                    <button type="submit"
+                                        style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                        class="managebtn">HomePage</button>
                                 </form>
                             </li>
                             <li class="nav-item active">
-                                <!-- <a class="nav-link" href="#">Wallets</a> -->
-                                <form method="POST" action="wallet" >
+                                <form method="POST" action="walletPage">
                                     <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
-                                    <button type="submit" 
-                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
-                                    class="managebtn">Wallet</button> 
-                                    <!-- <input type="submit" class="btn btn-info" value="Links">  -->
-                                    <!--  <div class="nav-link" type="submit"  >Links</div> -->
+                                    <button type="submit"
+                                        style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                        class="managebtn">Wallet</button>
                                 </form>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Profile</a>
                                 <ul class="dropdown-menu mega-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/u/<%=User.userEmail%>"> <%= User.name %> </a>
-                                    <a class="dropdown-item"> <%= User.userEmail %> </a>
+                                    <a class="dropdown-item" href="/u/<%=User.userEmail%>">
+                                        <%= User.name %>
+                                    </a>
+                                    <a class="dropdown-item">
+                                        <%= User.userEmail %>
+                                    </a>
                                     <a class="dropdown-item" href="/"> Log out </a>
                                 </ul>
                             </li>
@@ -66,7 +64,8 @@
                 </nav>
             </div>
             <!--    Nav Bar Ends Here -->
-            <div>
+            <!-- Graph Starts Here -->
+            <div style="margin-top: 10%;">
                 <script>
                     window.onload = function () {
                     
@@ -155,7 +154,9 @@
                 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
             </div>
 
-            <div class="togggleflip" onclick="togglefun()">
+            <!-- Graph Ends Here -->
+
+            <div class="togggleflip" onclick="togglefun()" style="margin-top: 10%; margin-bottom: -17%;">
                 <div id="toggle"></div>
             </div>
 
@@ -169,96 +170,112 @@
                         <tr id="header">
                             <th>ShortURL</th>
                             <th>MainURL</th>
-                            <th>Clicks</th>  
+                            <th>Clicks</th>
                             <th>Creation Time</th>
                             <th>Revenue</th>
                             <th>M</th>
                         </tr>
-                        <% var cnt = 0 ; %>
-                        <% urlList.forEach(element => { %>
-                            <tr>
-                                <td><a href="localhost:5000/<%= element.short %>"><%= element.short %> </a></td>
-                                <!-- <td><a href="<%= element.full %>"><%= element.full %> </a></td> -->
-                                <td>
-                                    <!-- this content can be very large... -->
-                                    <div style="overflow:hidden; height: 20px;">
-                                        <a href="<%= element.full %>"><%= element.full %> </a>
-                                    </div>
-                                </td>
-                                <td><%= element.clicks %> </td>
-                                <td>
-                                    <!-- this content can be very large... -->
-                                    <div style="overflow:hidden; height: 20px;">
-                                        <%= element.creationTime %>
-                                    </div>
-                                </td>
-                                <td><%= ((element.clicks * 0.1) * element.monetized).toFixed(2) %> TK</td>
-                                <td>
-                                    <% if(element.monetized == true){ %> 
-                                        <%= 'Y' %> 
-                                    <% }else{ %> 
-                                            <%= 'N' %> 
-                                    <% } %> 
-                                </td>
-                            </tr>
-                            <% cnt++; %> 
-                        <% }); %>
-                        <% for(i = 0 ; i < 3 - cnt ; i++){ %> 
-                            <tr>
-                                <td>NIL</td>
-                                <td>NIL</td>
-                                <td>NIL</td>
-                                <td>NIL</td>
-                                <td>NIL</td>
-                                <td>NIL</td>
-                            </tr>
-                        <% } %> 
+                        <% var cnt=0 ; %>
+                            <% urlList.forEach(element=> { %>
+                                <tr>
+                                    <td><a href="localhost:5000/<%= element.short %>">
+                                            <%= element.short %>
+                                        </a></td>
+                                    <!-- <td><a href="<%= element.full %>"><%= element.full %> </a></td> -->
+                                    <td>
+                                        <!-- this content can be very large... -->
+                                        <div style="overflow:hidden; height: 20px;">
+                                            <a href="<%= element.full %>">
+                                                <%= element.full %>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <%= element.clicks %>
+                                    </td>
+                                    <td>
+                                        <!-- this content can be very large... -->
+                                        <div style="overflow:hidden; height: 20px;">
+                                            <%= element.creationTime %>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <%= ((element.clicks * 0.1) * element.monetized).toFixed(2) %> TK
+                                    </td>
+                                    <td>
+                                        <% if(element.monetized==true){ %>
+                                            <%= 'Y' %>
+                                                <% }else{ %>
+                                                    <%= 'N' %>
+                                                        <% } %>
+                                    </td>
+                                </tr>
+                                <% cnt++; %>
+                                    <% }); %>
+                                        <% for(i=0 ; i < 3 - cnt ; i++){ %>
+                                            <tr>
+                                                <td>NIL</td>
+                                                <td>NIL</td>
+                                                <td>NIL</td>
+                                                <td>NIL</td>
+                                                <td>NIL</td>
+                                                <td>NIL</td>
+                                            </tr>
+                                            <% } %>
                     </table>
                 </div>
 
                 <!--Table Ends-->
                 <!--Bar Starts-->
-                <div class="d-flex" id="PriceBarToggle" >
-                    <div class="bar1wrapper" id="PriceBarToggle1"  >
+                <div class="d-flex" id="PriceBarToggle">
+
+                    <div class="bar1wrapper" id="PriceBarToggle1">
+
                         <div class="box">
-                            <div class="logo"><img src="card.png" alt=""></div>
-                            <div class="chip"><img src="chip.png" alt=""></div>
-                            <div class="c-number">1234 5678 9000 0000</div>
-                            <div class="c-name">CUSTOMER NAME</div>
-                            <!-- <div class="date-1">01/20</div>
-                            <div class="date-2">12/25</div> -->
-                        </div>
-                    </div>
-                    <div class="bar2wrapper"  id="PriceBarToggle2">
-                        <div class="box">
-                            <div class="logo"><img src="card.png" alt=""></div>
-                            <div class="chip"><img src="chip.png" alt=""></div>
-                            <div class="c-number">1234 5678 9000 0000</div>
-                            <div class="c-name">CUSTOMER NAME</div>
-                            <!-- <div class="date-1">01/20</div>
-                            <div class="date-2">12/25</div> -->
+                            <div class="c-name">Banana Pro</div>
+                            <div class="c-number">10% OFF</div>
+                            <div class="c-number1"> 100 Links</div>
+                            <div class="c-number1"> Tk. 25</div>
+                            <image src="chip.png" class="CardChipImg">
+                            </image>
+                            <div class="c-number2">10 days </div>
                         </div>
                     </div>
 
 
-                    <div class="bar3wrapper"  id="PriceBarToggle3">
+                    <div class="bar2wrapper" id="PriceBarToggle2">
                         <div class="box">
-                            <div class="logo"><img src="card.png" alt=""></div>
-                            <div class="chip"><img src="chip.png" alt=""></div>
-                            <div class="c-number">1234 5678 9000 0000</div>
-                            <div class="c-name">CUSTOMER NAME</div>
-                            <!-- <div class="date-1">01/20</div>
-                            <div class="date-2">12/25</div> -->
+                            <div class="c-name1">Banana Boom</div>
+                            <div class="c-number">15% OFF</div>
+                            <div class="c-number1"> 500 Links</div>
+                            <div class="c-number1"> Tk. 100</div>
+                            <image src="chip.png" class="CardChipImg">
+                            </image>
+                            <div class="c-number2">20 days </div>
                         </div>
                     </div>
-                    <div class="bar4wrapper"  id="PriceBarToggle4">
+
+                    <div class="bar3wrapper" id="PriceBarToggle3">
                         <div class="box">
-                            <div class="logo"><img src="card.png" alt=""></div>
-                            <div class="chip"><img src="chip.png" alt=""></div>
-                            <div class="c-number">1234 5678 9000 0000</div>
-                            <div class="c-name">CUSTOMER NAME</div>
-                            <!-- <div class="date-1">01/20</div>
-                            <div class="date-2">12/25</div> -->
+                            <div class="c-name"> Monkey Pro</div>
+                            <div class="c-number">20% OFF</div>
+                            <div class="c-number1"> 1K Links</div>
+                            <div class="c-number1"> Tk. 150</div>
+                            <image src="chip.png" class="CardChipImg">
+                            </image>
+                            <div class="c-number2">1 Month </div>
+                        </div>
+                    </div>
+
+                    <div class="bar4wrapper" id="PriceBarToggle4">
+                        <div class="box">
+                            <div class="c-name1"> Monkey Boom</div>
+                            <div class="c-number">30% OFF</div>
+                            <div class="c-number1"> %K Links</div>
+                            <div class="c-number1"> Tk. 500</div>
+                            <image src="chip.png" class="CardChipImg">
+                            </image>
+                            <div class="c-number2">2 Months </div>
                         </div>
                     </div>
                 </div>
@@ -271,7 +288,7 @@
                         <button class="cta" type="submit">
                             <p style="margin-left: -40px; margin-top: -15px;">More</p>
                             <span>
-                                <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1"
+                                <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" style="margin-top: 11%;"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <path class="one"
@@ -292,12 +309,10 @@
                 <!-- More Button Ends -->
 
             </section>
-
-
         </div>
-        <!--  Card Background  Starts -->
+        <!--  Card Background  Ends -->
 
-        <!-- Footer Background Ends -->
+        <!-- Footer Background Starts -->
         <footer class="footer">
             <div class="footer-left">
                 <img src="logo.png">
@@ -381,12 +396,12 @@
         function togglefun() {
             var toggle = document.getElementById("toggle").getAttribute("style");
             if (toggle == "transform: translateX(0px);") {
-                document.getElementById("toggle").style.transform = "translateX(73px)";  
+                document.getElementById("toggle").style.transform = "translateX(73px)";
                 ShowPriceBar();
             }
             else {
                 document.getElementById("toggle").style.transform = "translateX(0px)";
-               ShowTable();
+                ShowTable();
             }
         }
 
@@ -399,14 +414,14 @@
             document.getElementById('tableToggle').style.display = "none";
         }
         function ShowTable() {
-           document.getElementById('PriceBarToggle').style.display = "none";
-           document.getElementById('PriceBarToggle1').style.display = "none";
-           document.getElementById('PriceBarToggle2').style.display = "none";
-           document.getElementById('PriceBarToggle3').style.display = "none";
-           document.getElementById('PriceBarToggle4').style.display = "none";
-           document.getElementById('tableToggle').style.display = "block";
-           console.log("here");
-       }
+            document.getElementById('PriceBarToggle').style.display = "none";
+            document.getElementById('PriceBarToggle1').style.display = "none";
+            document.getElementById('PriceBarToggle2').style.display = "none";
+            document.getElementById('PriceBarToggle3').style.display = "none";
+            document.getElementById('PriceBarToggle4').style.display = "none";
+            document.getElementById('tableToggle').style.display = "block";
+            console.log("here");
+        }
     </script>
     <!--For Toggle Button Ends -->
 
