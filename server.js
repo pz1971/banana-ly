@@ -62,6 +62,7 @@ app.post('/signUpButtonAction', async (req, res) => {
         return res.sendStatus(404)
     }
 })
+
 app.post('/logInButtonAction', async (req, res) => {
     const x = await User.findOne({ userEmail: req.body.email2 })
     if (x == null) {
@@ -76,6 +77,19 @@ app.post('/logInButtonAction', async (req, res) => {
         }
         else
         return res.sendStatus(404)
+    }
+})
+
+app.get('/userHome', async (req, res) => {
+    const x = await User.findOne({ userEmail: req.query.email })
+    // console.log(x) ;
+    if (x == null) {
+        // not registered
+        return res.sendStatus(404)
+    }
+    else {
+        const urlList = await shortUrl.find({ userEmail: req.query.email }).limit(3) ;
+        res.render('userHome', { User: x, shortUrls: { short: "" }, urlList: urlList })
     }
 })
 
