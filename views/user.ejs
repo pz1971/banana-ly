@@ -11,7 +11,7 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="../userHomeStyle.css">
     <title>User Page</title>
 </head>
 
@@ -25,51 +25,29 @@
 
             <div class="container-fluid p-0">
                 <nav class="navbar navbar-expand-lg my-navbar">
-                    <a class="navbar-brand" href="/userHome?email=<%= User.userEmail %>">
-                        <img class="image_logo" src="logo.png" style="height: 60px; width:121px" alt="">
+                    <a class="navbar-brand" href="#">
+                        <img class="image_logo" src="../logo.png" style="height: 60px; width:121px" alt="">
                     </a>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 300px;">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 490px;">
                         <ul class="navbar-nav m-auto">
                             <li class="nav-item active">
-                                <!-- <form method="POST" action="adSubmission" > -->
-                                <form method="POST" action="adSubmission" >
+                                <form method="POST" action="../walletPage">
                                     <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
-                                    <button type="submit" 
-                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
-                                    class="managebtn">Place Ad</button> 
-                                    <!-- <input type="submit" class="btn btn-info" value="Links">  -->
-                                    <!--  <div class="nav-link" type="submit"  >Links</div> -->
-                                </form>
-                            </li>
-                            <li class="nav-item active">
-                                <!-- <form method="POST" action="adSubmission" > -->
-                                <form method="POST" action="allAds" >
-                                    <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
-                                    <button type="submit" 
-                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
-                                    class="managebtn">ADs</button> 
-                                    <!-- <input type="submit" class="btn btn-info" value="Links">  -->
-                                    <!--  <div class="nav-link" type="submit"  >Links</div> -->
-                                </form>
-                            </li>
-                            <li class="nav-item active">
-                                <form method="POST" action="wallet" >
-                                    <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
-                                    <button type="submit" 
-                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
-                                    class="managebtn">Wallet</button> 
+                                    <button type="submit"
+                                        style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                        class="managebtn">Wallet</button>
                                     <!-- <input type="submit" class="btn btn-info" value="Links">  -->
                                     <!--  <div class="nav-link" type="submit"  >Links</div> -->
                                 </form>
                             </li>
                             <li class="nav-item ">
                                 <!-- <a class="nav-link" href="/managePage.html">Links</a> -->
-                                <form method="POST" action="managePage" class="manage">
+                                <form method="POST" action="../managePage" class="manage">
                                     <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
-                                    <button type="submit" 
-                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
-                                    class="managebtn">Links</button> 
+                                    <button type="submit"
+                                        style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                        class="managebtn">Links</button>
                                     <!-- <input type="submit" class="btn btn-info" value="Links">  -->
                                     <!--  <div class="nav-link" type="submit"  >Links</div> -->
                                 </form>
@@ -77,8 +55,12 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Profile</a>
                                 <ul class="dropdown-menu mega-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/u/<%=User.userEmail%>"> <%= User.name %> </a>
-                                    <a class="dropdown-item"> <%= User.userEmail %> </a>
+                                    <a class="dropdown-item" href="/u/<%=User.userEmail%>">
+                                        <%= User.name %>
+                                    </a>
+                                    <a class="dropdown-item">
+                                        <%= User.userEmail %>
+                                    </a>
                                     <a class="dropdown-item" href="/"> Log out </a>
                                 </ul>
                             </li>
@@ -96,9 +78,9 @@
 
 
             <!-- <section class="container section_io "> -->
-            <image src="hey.png" class="userImg">
+            <image src="../hey.png" class="userImg">
             </image>
-            <form method="POST" action="editUserInfo" class="UserInput">
+            <form method="POST" action="../editUserInfo" class="UserInput">
 
                 <label for="name" class="UserfiledLabel">Name</label>
                 <input type="text"  id="name" name="name" readonly value="<%= User.name %>"
@@ -161,7 +143,7 @@
         <!-- Footer Background Ends -->
         <footer class="footer">
             <div class="footer-left">
-                <img src="logo.png">
+                <img src="../logo.png">
                 <h3>Banana.ly</h3>
                 <p>Lengthy links are too BORING, right?
                     <br>Here, we come with a solution.

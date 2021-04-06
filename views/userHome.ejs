@@ -29,8 +29,19 @@
                         <img class="image_logo" src="logo.png" style="height: 60px; width:121px" alt="">
                     </a>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 360px;">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 300px;">
                         <ul class="navbar-nav m-auto">
+                            <li class="nav-item active">
+                                <!-- <form method="POST" action="adSubmission" > -->
+                                <form method="POST" action="adSubmission" >
+                                    <input type="hidden" name="email" value="<%= User.userEmail %>" readonly>
+                                    <button type="submit" 
+                                    style="margin-left: -30px;  font-size: large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                    class="managebtn">Place AD</button> 
+                                    <!-- <input type="submit" class="btn btn-info" value="Links">  -->
+                                    <!--  <div class="nav-link" type="submit"  >Links</div> -->
+                                </form>
+                            </li>
                             <li class="nav-item active">
                                 <!-- <form method="POST" action="adSubmission" > -->
                                 <form method="POST" action="allAds" >
@@ -108,7 +119,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input class="l" type="checkbox" value="monetized" name="toggle">
+                                <input class="l" type="checkbox" value="monetized" id = "toggle" name="toggle" onclick="onToggle()">
                             </div>
                             <script>
                                 function check_this_URL(){
@@ -124,6 +135,30 @@
                                     }
                                     else{
                                         btn.disabled = false ;
+                                    }
+                                }
+                                function onToggle(){
+                                    const tog_btn = document.getElementById("toggle") ;
+                                    
+                                    if (tog_btn.value == "monetized") {
+                                        tog_btn.value = "not_monetized" ;
+                                        var message = "Monetization turned on."
+                                        var confirmBox = confirm(message);
+                                        if (confirmBox == true) {
+                                            
+                                        } else {
+                                            
+                                        }
+                                    }
+                                    else {
+                                        tog_btn.value = "monetized" ;
+                                        var message = "Monetization turned off."
+                                        var confirmBox = confirm(message);
+                                        if (confirmBox == true) {
+    
+                                        } else {
+    
+                                        }
                                     }
                                 }
                             </script>
@@ -155,11 +190,11 @@
 
             <section class="container section_io ">
 
-                <div>
+                <!-- <div>
                     <div class="togggleflip" onclick="togglefun()">
                         <div id="toggle"></div>
                     </div>
-                </div>
+                </div> -->
 
                 <!--Table Starts-->
                 <div>
@@ -343,7 +378,7 @@
 
 
     <!--For Toggle Button Starts -->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         function togglefun() {
             var toggle = document.getElementById("toggle").getAttribute("style");
             if (toggle == "transform: translateX(0px);") {
@@ -357,7 +392,7 @@
                 document.getElementById("heading").style.color = "#000";
             }
         }
-    </script>
+    </script> -->
     <!--For Toggle Button Ends -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
